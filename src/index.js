@@ -6,18 +6,19 @@ import {
     Link,
     browserHistory
 }                                           from 'react-router'
+import {BrowserRouter}                      from 'react-router-dom'
 import {createStore, applyMiddleware}       from 'redux'
 import {Provider}                           from 'react-redux'
-import {ReduxPromise}                       from 'redux-promise'
+import promiseMiddleware                    from 'redux-promise'
 
-import reducers                             from './reducers/index'
+import reducers                             from './reducers/reducer'
 import Blog                                 from './components/blog.jsx'
 
-const createStoreWithMiddleware = applyMiddleware()(createStore)
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore)
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
-        <Router history={browserHistory}>
+        <BrowserRouter history={browserHistory}>
             <Route path="/" component={Blog} />
-        </Router>
+        </BrowserRouter>
     </Provider>, document.getElementById("redux-app"))
